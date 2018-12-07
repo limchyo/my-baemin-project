@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% block title %}baemin{% endblock %}
+{% block body %}
+{% include "navbar.html" %}
+<div class="container">
+  {% if user.is_authenticated %}
+    {% if user.partner %}
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          <h2>환영합니다</h2>
+            <table class="table">
+              <tr>
+                <th>
+                  업체이름
+                </th>
+                <td>
+                  {{ user.partner.name }}
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  연락처
+                </th>
+                <td>
+                 {{ user.partner.contact }}
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  업체주소
+                </th>
+                <td>
+                  {{ user.partner.address }}
+                </td>
+              </tr>
+              <tr>
+                <th>
+                  업체소개
+                </th>
+                <td>
+                  {{ user.partner.description }}
+                </td>
+              </tr>
+            </table>
+            <a href="/partner/edit/">
+              <button class="btn btn-default btn-block">
+                수정하기
+              </button>
+            </a>
+          </div>
+        </div>
+    {% elif user.client %}
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+        <h2>{{ user.client.name }}님 안녕하세요</h2>
+      </div>
+    </div>
+    {% else %}
+    <div class="row">
+      <div class="col-sm-6 col-sm-offset-3">
+          <h2>추가정보를 입력하세요</h2>
+          <form action="" method="post" >
+            {% csrf_token %}
+            <!-- <div class="form-group">
+              <input type="text" name="name" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="text" name="contact" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="text" name="address" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="text" name="description" class="form-control">
+            </div> -->
+            {{ form.as_p }}
+            <button class="btn btn-default btn-block">저장하기</button>
+          </form>
+        </div>
+      </div>
+    {% endif %}
+  {% else %}
+  <div>로그인 해주세요</div>
+  {% endif %}
+</div>
+{% endblock %}
